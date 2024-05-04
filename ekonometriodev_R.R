@@ -1,60 +1,63 @@
+```
 library(readxl)
 CevreKirliligi_1_ <- read_excel("C:/Users/DELL/Downloads/CevreKirliligi (1).xlsx", 
                                 col_types = c("numeric", "numeric", "numeric", 
                                               "numeric", "numeric"))
+```
+
 View(CevreKirliligi_1_)
 
 veri <- CevreKirliligi_1_
 
-head(veri)  # Veri setini görselleþtirme
+head(veri)  # Veri setini gÃ¶rselleÅŸtirme
 
-# Popülasyon Zaman Serisi
+# PopÃ¼lasyon Zaman Serisi
 populasyon_serisi <- ts(veri$pop, start = 1968, end = 2018, frequency = 1)
 
 # Karbondioksit Emisyonu Zaman Serisi
 co2_serisi <- ts(veri$co2, start = 1968, end = 2018, frequency = 1)
 
-# Kiþi Baþýna Gayri Safi Milli Hasýla (GDP) Zaman Serisi
+# KiÅŸi BaÅŸÄ±na Gayri Safi Milli HasÄ±la (GDP) Zaman Serisi
 gdp_serisi <- ts(veri$gdp, start = 1968, end = 2018, frequency = 1)
 
-# Popülasyon Zaman Serisi Görselleþtirme
-plot(populasyon_serisi, main = "Popülasyon Zaman Serisi", xlab = "Yýl", ylab = "Popülasyon")
+# PopÃ¼lasyon Zaman Serisi GÃ¶rselleÅŸtirme
+plot(populasyon_serisi, main = "PopÃ¼lasyon Zaman Serisi", xlab = "YÄ±l", ylab = "PopÃ¼lasyon")
 
-# Karbondioksit Emisyonu Zaman Serisi Görselleþtirme
-plot(co2_serisi, main = "Karbondioksit Emisyonu Zaman Serisi", xlab = "Yýl", ylab = "CO2 Emisyonu")
+# Karbondioksit Emisyonu Zaman Serisi GÃ¶rselleÅŸtirme
+plot(co2_serisi, main = "Karbondioksit Emisyonu Zaman Serisi", xlab = "YÄ±l", ylab = "CO2 Emisyonu")
 
-# GDP Zaman Serisi Görselleþtirme
-plot(gdp_serisi, main = "GDP Zaman Serisi", xlab = "Yýl", ylab = "GDP")
+# GDP Zaman Serisi GÃ¶rselleÅŸtirme
+plot(gdp_serisi, main = "GDP Zaman Serisi", xlab = "YÄ±l", ylab = "GDP")
 
-# Popülasyon Zaman Serisi Ýçin ACF ve PACF Grafikleri
+# PopÃ¼lasyon Zaman Serisi Ä°Ã§in ACF ve PACF Grafikleri
 acf(populasyon_serisi)
 pacf(populasyon_serisi)
 
-# Karbondioksit Emisyonu Zaman Serisi Ýçin ACF ve PACF Grafikleri
+# Karbondioksit Emisyonu Zaman Serisi Ä°Ã§in ACF ve PACF Grafikleri
 acf(co2_serisi)
 pacf(co2_serisi)
 
-# GDP Zaman Serisi Ýçin ACF ve PACF Grafikleri
+# GDP Zaman Serisi Ä°Ã§in ACF ve PACF Grafikleri
 acf(gdp_serisi)
 pacf(gdp_serisi)
 
-# tseries paketini yükleme
+# tseries paketini yÃ¼kleme
 install.packages("tseries")
 library(tseries)
 
-# Popülasyon Zaman Serisi Duraðanlýk Kontrolü
+# PopÃ¼lasyon Zaman Serisi DuraÄŸanlÄ±k KontrolÃ¼
 adf.test(populasyon_serisi)
 kpss.test(populasyon_serisi)
 
-# Karbondioksit Emisyonu Zaman Serisi Duraðanlýk Kontrolü
+# Karbondioksit Emisyonu Zaman Serisi DuraÄŸanlÄ±k KontrolÃ¼
 adf.test(co2_serisi)
 kpss.test(co2_serisi)
 
-# GDP Zaman Serisi Duraðanlýk Kontrolü
+# GDP Zaman Serisi DuraÄŸanlÄ±k KontrolÃ¼
 adf.test(gdp_serisi)
 kpss.test(gdp_serisi)
 
-# rugarch paketini yükleme
+# rugarch paketini yÃ¼kleme
 install.packages("rugarch")
 library(rugarch)
 
@@ -66,5 +69,5 @@ spec <- ugarchspec(variance.model = list(model = "sGARCH", garchOrder = c(1, 1))
 # GARCH Modeli Uygulama
 garch_fit <- ugarchfit(spec = spec, data = gdp_serisi)
 
-# Model Sonuçlarýný Görüntüleme
+# Model SonuÃ§larÄ±nÄ± GÃ¶rÃ¼ntÃ¼leme
 print(garch_fit)
